@@ -1,9 +1,7 @@
-async function getData(id) {
-  const url = `${process.env.NEXT_PUBLIC_API_BASE}/verify/${id}`;
-  const res = await fetch(url, { cache: 'no-store' });
-  if (!res.ok) throw new Error('Not found');
-  return res.json();
-}
+'use client';
+
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 function statusBadge({ issue_date, expiration_date, status }) {
   if (status === 'revoked') return 'Revoked';
@@ -16,12 +14,47 @@ function statusBadge({ issue_date, expiration_date, status }) {
   return 'Valid';
 }
 
-export default async function VerifyPage({ params }) {
-  const { id } = params;
-  let data;
-  try { 
-    data = await getData(id); 
-  } catch (e) {
+export default function VerifyPage() {
+  const sp = useSearchParams();
+  const id = sp.get('id');
+
+  const [data, setData] = useState(null);
+  const [state, setState] = useState('idle'); // idle | loading | error | done
+
+  useEffect(() => {
+    if (!id) return;
+    setState('loading');
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/verify/${encodeURIComponent(id)}`, { cache: 'no-store' })
+      .then((r) => {
+        if (!r.ok) throw new Error('not-found');
+        return r.json();
+      })
+      .then((json) => {
+        setData(json);
+        setState('done');
+      })
+      .catch(() => setState('error'));
+  }, [id]);
+
+  if (!id) {
+    return (
+      <main style={{ padding: 24 }}>
+        <h1>Verification</h1>
+        <p>Provide an ID in the URL like <code>?id=FP-123ABC</code>.</p>
+      </main>
+    );
+  }
+
+  if (state === 'loading') {
+    return (
+      <main style={{ padding: 24 }}>
+        <h1>Verification</h1>
+        <p>Loading…</p>
+      </main>
+    );
+  }
+
+  if (state === 'error' || !data) {
     return (
       <main style={{ padding: 24 }}>
         <h1>Verification</h1>
@@ -29,6 +62,7 @@ export default async function VerifyPage({ params }) {
       </main>
     );
   }
+
   return (
     <main style={{ padding: 24 }}>
       <h1>Verification</h1>
@@ -47,4 +81,3 @@ export default async function VerifyPage({ params }) {
     </main>
   );
 }
-
