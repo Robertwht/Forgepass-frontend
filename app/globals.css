@@ -1,0 +1,119 @@
+/* === Base === */
+:root {
+  --bg: #0b0c10;
+  --panel: #111217;
+  --panel-2: #151823;
+  --text: #e7e9ee;
+  --muted: #a8b0bf;
+  --brand: #7aa2ff;
+  --brand-2: #99b6ff;
+  --ok: #14b86a;
+  --warn: #f2b827;
+  --bad: #ff5d5d;
+  --border: #232735;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background: radial-gradient(1200px 600px at 20% -5%, #0f1320 0%, #0b0c10 55%);
+}
+
+/* === Layout === */
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #0a1020;
+  font-weight: 800;
+  letter-spacing: .5px;
+  box-shadow: var(--shadow);
+}
+.title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: .3px;
+}
+
+/* === Panels / cards === */
+.panel {
+  background: linear-gradient(0deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)), var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 22px;
+  box-shadow: var(--shadow);
+}
+
+.section-title {
+  margin: 0 0 12px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.muted { color: var(--muted); }
+
+/* === Buttons / links === */
+.button, .link {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: transform .05s ease, filter .2s ease;
+}
+.button {
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #0a1020;
+  box-shadow: var(--shadow);
+}
+.link {
+  color: var(--brand-2);
+}
+.button:hover, .link:hover { transform: translateY(-1px); filter: brightness(1.05); }
+
+/* === Certification list === */
+.cert-list { list-style: none; padding: 0; margin: 0; }
+.cert-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 16px;
+  padding: 14px 0;
+  border-top: 1px dashed var(--border);
+}
+.cert-item:first-child { border-top: 0; }
+.cert-name { font-weight: 700; }
+.cert-meta { color: var(--muted); }
+.badges { display: flex; gap: 8px; align-items: center; }
+
+/* === Badges === */
+.badge {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 999px;
+  letter-spacing: .2px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+}
+.badge.ok   { color: #0bd67a; border-color: rgba(20,184,106,.3); }
+.badge.warn { color: var(--warn); border-color: rgba(242,184,39,.35); }
+.badge.bad  { color: var(--bad); border-color: rgba(255,93,93,.35); }
