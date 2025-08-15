@@ -1,4 +1,5 @@
 import './globals.css';
+import Image from 'next/image';
 
 export const metadata = {
   title: 'ForgePass',
@@ -11,7 +12,15 @@ export default function RootLayout({ children }) {
       <body>
         <div className="container">
           <div className="header">
-            <div className="brand">FP</div>
+            <div className="brand logo" aria-label="ForgePass logo">
+              <Image
+                src="/logo.png"   // served from /public
+                alt="ForgePass logo"
+                width={28}
+                height={28}
+                priority
+              />
+            </div>
             <div className="title">ForgePass</div>
           </div>
           {children}
@@ -20,4 +29,5 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
 

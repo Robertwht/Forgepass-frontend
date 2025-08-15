@@ -1,4 +1,5 @@
 'use client';
+
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -18,17 +19,19 @@ export default function Home() {
       <h2 className="section-title">Quick Verify</h2>
       <p className="muted">Enter a ForgePass ID or scan a QR code.</p>
 
-      <form onSubmit={onSubmit} className="row" style={{ marginTop: 10 }}>
+      <form onSubmit={onSubmit} style={{ display: 'flex', gap: 10, marginTop: 10 }}>
         <input
-          className="input"
           value={id}
           onChange={(e) => setId(e.target.value)}
           placeholder="e.g., FP-DEMO01"
           aria-label="ForgePass ID"
-          autoFocus
+          style={{
+            flex: 1, padding: '10px 12px', borderRadius: 10, border: '1px solid var(--border)',
+            background: 'var(--panel-2)', color: 'var(--text)'
+          }}
         />
-        <button className="button pill" type="submit">Verify</button>
-        <Link className="button ghost pill" href="/scan">Scan QR</Link>
+        <button className="button" type="submit">Verify</button>
+        <Link className="link" href="/scan">Scan QR</Link>
       </form>
 
       <div style={{ marginTop: 16 }}>
@@ -37,5 +40,4 @@ export default function Home() {
     </main>
   );
 }
-
 

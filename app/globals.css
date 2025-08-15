@@ -36,18 +36,20 @@ body {
   gap: 14px;
   margin-bottom: 24px;
 }
-.brand {
+.brand.logo {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px; height: 36px;
-  border-radius: 10px;
+  width: 40px; height: 40px;
+  border-radius: 12px;
   background: linear-gradient(135deg, var(--brand), var(--brand-2));
   color: #0a1020;
-  font-weight: 800;
-  letter-spacing: .5px;
   box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.04);
 }
+.brand.logo img { width: 28px; height: 28px; object-fit: contain; border-radius: 6px; }
+
 .title {
   font-size: 28px;
   font-weight: 800;
@@ -117,3 +119,45 @@ body {
 .badge.ok   { color: #0bd67a; border-color: rgba(20,184,106,.3); }
 .badge.warn { color: var(--warn); border-color: rgba(242,184,39,.35); }
 .badge.bad  { color: var(--bad); border-color: rgba(255,93,93,.35); }
+
+/* === Inputs === */
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  outline: none;
+}
+.input::placeholder { color: #7d8599; }
+
+/* === Button variants === */
+.button.ghost {
+  background: transparent;
+  color: var(--brand-2);
+  box-shadow: none;
+  border: 1px solid var(--border);
+}
+.button.pill { border-radius: 999px; padding: 8px 14px; }
+
+/* === QR card === */
+.qr-wrap {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column; /* stack QR and button */
+  align-items: center;
+  gap: 12px; /* space between QR and button */
+}
+
+.qr-card {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  box-shadow: var(--shadow);
+}
+
+
+/* === Flex helpers === */
+.row { display: flex; gap: 10px; align-items: center; }
