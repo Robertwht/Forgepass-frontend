@@ -22,19 +22,28 @@ export default function VerifyPage() {
   const [state, setState] = useState('idle'); // idle | loading | error | done
 
   useEffect(() => {
-    if (!id) return;
-    setState('loading');
-    fetch(`${process.env.NEXT_PUBLIC_API_BASE}/verify/${encodeURIComponent(id)}`, { cache: 'no-store' })
-      .then((r) => {
-        if (!r.ok) throw new Error('not-found');
-        return r.json();
-      })
-      .then((json) => {
-        setData(json);
-        setState('done');
-      })
-      .catch(() => setState('error'));
-  }, [id]);
+  if (!id) return;
+
+  // Demo fallback: show a sample record when NEXT_PUBLIC_DEMO=1 and id=FP-DEMO01
+  if (process.env.NEXT_PUBLIC_DEMO === '1' && id === 'FP-DEMO01') {
+    setData({
+      person: { fp_public_id: 'FP-DEMO01' },
+      certifications: [
+        { id: '1', name: 'EMT-B', issue_date: '2025-01-01', expiration_date: '2026-01-01', status: 'valid' },
+        { id: '2', name: 'CPR/BLS Instructor', issue_date: '2024-10-01', expiration_date: '2025-10-01', status: 'valid' }
+      ]
+    });
+    setState('done');
+    return;
+  }
+
+  setState('loading');
+  fetch(`${process.env.NEXT_PUBLIC_API_BASE}/verify/${encodeURIComponent(id)}`, { cache: 'no-store' })
+    .then(r => { if (!r.ok) throw new Error('nf'); return r.json(); })
+    .then(json => { setData(json); setState('done'); })
+    .catch(() => setState('error'));
+}, [id]);
+
 
   if (!id) {
     return (
